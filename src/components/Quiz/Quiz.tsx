@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import QuizList from "./QuizList/QuizList";
 import CustomButton from "./CustomButton/CustomButton";
 import {useAppDispatch, useAppSelector} from "../../hook";
@@ -16,15 +16,18 @@ const Quiz: React.FC<IQuiz> = ({quiz}: IQuiz): JSX.Element => {
     const currentQuiz = useAppSelector(state => state.quiz.currentQuiz)
     const lengthOfQuestions = useAppSelector(state => state.quiz.quizData.length)
     const dispatch = useAppDispatch()
+    const [isShowError, setIsShowError] = useState(false)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
         if (!selectedOption) {
+            setIsShowError(true)
             return
         }
         if (quiz.correct === selectedOption) {
             dispatch(increaseCorrectAnswers())
         }
+        setIsShowError(false)
         dispatch(nextQuiz())
     }
 
@@ -33,7 +36,11 @@ const Quiz: React.FC<IQuiz> = ({quiz}: IQuiz): JSX.Element => {
             <form onSubmit={handleSubmit}>
                 <div className="quiz__content">
                     <h2 className='quiz__title'>{quiz.question}</h2>
-                    <span className='quiz__subtitle'>Question: {currentQuiz+1}/{lengthOfQuestions}</span>
+                    {isShowError
+                        ? <span
+                            className='quiz__subtitle quiz__subtitle-error'>Choose the correct answer</span>
+                        : <span className='quiz__subtitle'>Question: {currentQuiz + 1}/{lengthOfQuestions}</span>
+                    }
                     <QuizList
                         options={quiz.options}
                     />

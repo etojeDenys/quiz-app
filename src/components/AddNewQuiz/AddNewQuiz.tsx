@@ -25,13 +25,14 @@ const AddNewQuiz = () => {
         options: quizToEdit.options,
         correct: quizToEdit.correct,
         id: quizToEdit.id
-
     })
+    const [error, setError] = useState('')
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     useEffect(() => {
         if (selectedOption) {
+            setError('')
             setQuiz({
                 ...quiz,
                 correct: selectedOption,
@@ -40,6 +41,7 @@ const AddNewQuiz = () => {
     }, [selectedOption])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setError('')
         const {name, value} = event.target
         setQuiz({...quiz, [name]: value})
     }
@@ -61,7 +63,18 @@ const AddNewQuiz = () => {
     }
 
     const createQuiz = (quiz: IQuiz) => {
-        if (quiz.question && quiz.correct && quiz.options.length >= 2) {
+        if (!quiz.question) {
+            setError('Write a question!')
+            return;
+        } else if (quiz.options.length < 2) {
+            setError('Add at least two options')
+            return;
+        } else if (!quiz.correct) {
+            setError('Select the correct answer')
+            return
+        }
+
+        if (quiz.options.length >= 2) {
             if (quiz.id) {
                 dispatch(editQuiz({
                     question: quiz.question,
@@ -82,7 +95,6 @@ const AddNewQuiz = () => {
     }
 
     return (
-        // TODO error message & required fields
         <div className='add-quiz__container'>
             <div className="add-quiz">
                 <form onSubmit={addOption}>
@@ -105,7 +117,8 @@ const AddNewQuiz = () => {
                     </div>
                 </form>
 
-                <QuizToShow quiz={quiz} isEdit={!!quizToEdit.id} deleteOption={deleteOption} handleClick={createQuiz}/>
+                <QuizToShow errorMessage={error} quiz={quiz} isEdit={!!quizToEdit.id} deleteOption={deleteOption}
+                            handleClick={createQuiz}/>
             </div>
         </div>
     )
