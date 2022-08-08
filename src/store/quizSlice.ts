@@ -78,11 +78,15 @@ const quizSlice = createSlice({
         addQuiz(state, action) {
             state.quizData.push(action.payload)
             state.selectedOption = ''
+        },
+        deleteQuiz(state, action) {
+            state.quizData.filter(quiz => quiz.id !== action.payload.id)
         }
     }
 })
 
 export const {
+    deleteQuiz,
     playAgain,
     setQuizToEdit,
     increaseCorrectAnswers,

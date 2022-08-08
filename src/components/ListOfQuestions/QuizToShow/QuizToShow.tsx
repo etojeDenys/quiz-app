@@ -8,10 +8,11 @@ interface QuizToShowProps {
     index?: number,
     isEdit?: boolean,
     handleClick: (quiz: IQuiz) => void,
-    disabled?:boolean
+    disabled?:boolean,
+    deleteOption?: (id:string)=>void
 }
 
-const QuizToShow: React.FC<QuizToShowProps> = ({quiz, index, isEdit, handleClick,disabled}) => {
+const QuizToShow: React.FC<QuizToShowProps> = ({quiz, index, isEdit,deleteOption, handleClick,disabled}) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -29,6 +30,7 @@ const QuizToShow: React.FC<QuizToShowProps> = ({quiz, index, isEdit, handleClick
                         disabled={disabled}
                         options={quiz.options}
                         correctAnswer={quiz.correct}
+                        deleteOption={deleteOption}
                     />
                 </div>
                 <CustomButton type='submit'>{isEdit||disabled ? 'Edit' : 'Create'}</CustomButton>

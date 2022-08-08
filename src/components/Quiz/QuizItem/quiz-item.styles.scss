@@ -2,7 +2,8 @@
 .quiz__item {
   list-style-type: none;
   margin: 10px 0;
-
+  display: flex;
+  justify-content: space-between;
   input {
     margin: 0;
   }

@@ -57,7 +57,6 @@ const AddNewQuiz = () => {
     }
 
     const deleteOption = (id: string) => {
-        // TODO delete option
         setQuiz({...quiz, options: quiz.options.filter(item => item.id !== id)})
     }
 
@@ -106,7 +105,7 @@ const AddNewQuiz = () => {
                     </div>
                 </form>
 
-                <QuizToShow quiz={quiz} isEdit={!!quizToEdit.id} handleClick={createQuiz}/>
+                <QuizToShow quiz={quiz} isEdit={!!quizToEdit.id} deleteOption={deleteOption} handleClick={createQuiz}/>
             </div>
         </div>
     )

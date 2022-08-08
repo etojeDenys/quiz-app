@@ -6,6 +6,7 @@ interface IQuizList {
     options: Array<IOption>,
     correctAnswer?: string,
     disabled?:boolean,
+    deleteOption?: (id:string)=>void
 }
 
 interface IOption {
@@ -13,7 +14,7 @@ interface IOption {
     id: string,
 }
 
-const QuizList: React.FC<IQuizList> = ({options,correctAnswer,disabled}: IQuizList) => {
+const QuizList: React.FC<IQuizList> = ({options,deleteOption,correctAnswer,disabled}: IQuizList) => {
 
     return (
         <ul className='quiz__list'>
@@ -23,6 +24,7 @@ const QuizList: React.FC<IQuizList> = ({options,correctAnswer,disabled}: IQuizLi
                 id={item.id}
                 correctAnswer={correctAnswer}
                 disabled={disabled}
+                deleteOption={deleteOption}
             />)}
         </ul>
     )
