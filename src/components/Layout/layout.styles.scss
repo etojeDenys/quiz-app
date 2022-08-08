@@ -1,0 +1,21 @@
+
+
+
+.add-quiz__links__container{
+  position: absolute;
+  right: 3%;
+  top: 3%;
+
+  .add-quiz__link {
+    margin-left: 25px;
+    padding: 15px;
+    background-color: dodgerblue;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+}
+

@@ -1,0 +1,39 @@
+
+
+.add-quiz__container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.add-quiz{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .add-quiz__wrapper{
+    .add-option__btn{
+      background-color: dodgerblue;
+      border: none;
+      color: #fff;
+      height: 40px;
+    }
+  }
+  .wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 40px;
+    button{
+      height: 25px;
+      font-size: 15px;
+    }
+  }
+}
+
+.add-quiz__list{
+  padding: 10px;
+  min-width: 200px;
+}
+
