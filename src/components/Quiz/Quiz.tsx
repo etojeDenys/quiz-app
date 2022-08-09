@@ -48,7 +48,6 @@ const Quiz: React.FC<QuizProps> = ({quiz}): JSX.Element => {
                 </div>
                 <CustomButton type='submit'>Submit</CustomButton>
             </form>
-            {/*TODO Back button*/}
             {!!currentQuiz && <div onClick={() => dispatch(previousQuiz())} className="quiz__back">Back</div>}
         </div>
     )

@@ -52,8 +52,9 @@ const quizSlice = createSlice({
             localStorage.setItem('quizData', JSON.stringify(state.quizData))
         },
         countCorrectAnswers(state) {
-            state.countOfCorrectAnswers = state.userChoice.reduce((acc, item) => item.isCorrect ? acc + 1 : acc, 0)
-
+            if (state.userChoice.length) {
+                state.countOfCorrectAnswers = state.userChoice.reduce((acc, item) => item.isCorrect ? acc + 1 : acc, 0)
+            }
         },
         setQuizToEdit(state, action) {
             state.quizToEdit = {...action.payload}
@@ -69,7 +70,7 @@ const quizSlice = createSlice({
             state.userChoice.push({
                 optionId: state.selectedOption,
                 quizId: action.payload.id,
-                isCorrect: action.payload.correct===state.selectedOption
+                isCorrect: action.payload.correct === state.selectedOption
             })
             state.currentQuiz++
             state.selectedOption = ''
