@@ -12,9 +12,8 @@ const QuizApp: React.FC = () => {
     return (
         <div className='quiz__container'>
             {currentQuiz < quizData.length
-                ? <Quiz quiz={quizData[currentQuiz]}/>
+                ? <Quiz quiz={quizData[currentQuiz]} />
                 : <QuizResult/>
-
             }
         </div>
     )

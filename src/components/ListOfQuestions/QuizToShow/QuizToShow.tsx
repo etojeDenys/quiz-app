@@ -30,7 +30,6 @@ const QuizToShow: React.FC<QuizToShowProps> = (props) => {
         disabled
     } = props
 
-    console.log(isEdit)
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         handleClick(quiz)

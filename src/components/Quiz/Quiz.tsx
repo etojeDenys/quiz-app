@@ -2,16 +2,16 @@ import React, {useState} from "react";
 import QuizList from "./QuizList/QuizList";
 import CustomButton from "./CustomButton/CustomButton";
 import {useAppDispatch, useAppSelector} from "../../hook";
-import {increaseCorrectAnswers, nextQuiz} from "../../store/quizSlice";
+import {countCorrectAnswers, nextQuiz, previousQuiz} from "../../store/quizSlice";
 import './quiz.styles.scss'
+import {IQuiz} from "../ListOfQuestions/ListOfQuestions";
 
-
-interface IQuiz {
-    quiz: { question: string, options: Array<{ label: string, id: string }>, correct: string },
+interface QuizProps {
+    quiz: IQuiz
 }
 
 
-const Quiz: React.FC<IQuiz> = ({quiz}: IQuiz): JSX.Element => {
+const Quiz: React.FC<QuizProps> = ({quiz}): JSX.Element => {
     const selectedOption = useAppSelector(state => state.quiz.selectedOption)
     const currentQuiz = useAppSelector(state => state.quiz.currentQuiz)
     const lengthOfQuestions = useAppSelector(state => state.quiz.quizData.length)
@@ -24,11 +24,12 @@ const Quiz: React.FC<IQuiz> = ({quiz}: IQuiz): JSX.Element => {
             setIsShowError(true)
             return
         }
-        if (quiz.correct === selectedOption) {
-            dispatch(increaseCorrectAnswers())
-        }
         setIsShowError(false)
-        dispatch(nextQuiz())
+
+        dispatch(nextQuiz({id: quiz.id, correct: quiz.correct}))
+        if (currentQuiz === lengthOfQuestions - 1) {
+            dispatch(countCorrectAnswers())
+        }
     }
 
     return (
@@ -48,7 +49,7 @@ const Quiz: React.FC<IQuiz> = ({quiz}: IQuiz): JSX.Element => {
                 <CustomButton type='submit'>Submit</CustomButton>
             </form>
             {/*TODO Back button*/}
-            <div className="quiz__back">Back</div>
+            {!!currentQuiz && <div onClick={() => dispatch(previousQuiz())} className="quiz__back">Back</div>}
         </div>
     )
 }

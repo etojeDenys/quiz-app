@@ -12,10 +12,12 @@ interface IInitialState {
     countOfCorrectAnswers: number,
     selectedOption: string,
     quizToEdit: IQuiz,
-    quizData: Array<IQuiz>
+    quizData: Array<IQuiz>,
+    userChoice: Array<{ optionId: string, quizId: string, isCorrect: boolean }>
 }
 
 const initialState: IInitialState = {
+    userChoice: [],
     currentQuiz: 0,
     countOfCorrectAnswers: 0,
     selectedOption: '',
@@ -49,7 +51,10 @@ const quizSlice = createSlice({
 
             localStorage.setItem('quizData', JSON.stringify(state.quizData))
         },
+        countCorrectAnswers(state) {
+            state.countOfCorrectAnswers = state.userChoice.reduce((acc, item) => item.isCorrect ? acc + 1 : acc, 0)
 
+        },
         setQuizToEdit(state, action) {
             state.quizToEdit = {...action.payload}
         },
@@ -58,14 +63,20 @@ const quizSlice = createSlice({
         },
         playAgain(state) {
             state.currentQuiz = 0
-            state.countOfCorrectAnswers = 0
+            state.userChoice = []
         },
-        nextQuiz(state) {
+        nextQuiz(state, action) {
+            state.userChoice.push({
+                optionId: state.selectedOption,
+                quizId: action.payload.id,
+                isCorrect: action.payload.correct===state.selectedOption
+            })
             state.currentQuiz++
             state.selectedOption = ''
         },
-        increaseCorrectAnswers(state) {
-            state.countOfCorrectAnswers++
+        previousQuiz(state) {
+            state.currentQuiz--
+            state.selectedOption = state.userChoice.pop()!.optionId
         },
         addQuiz(state, action) {
             state.quizData.push(action.payload)
@@ -93,11 +104,12 @@ export const {
     playAgain,
     setQuizToEdit,
     loadQuizData,
-    increaseCorrectAnswers,
+    countCorrectAnswers,
     changeSelectedOption,
     editQuiz,
     nextQuiz,
-    addQuiz
+    addQuiz,
+    previousQuiz
 } = quizSlice.actions
 
 export default quizSlice.reducer
