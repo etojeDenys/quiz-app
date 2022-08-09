@@ -1,7 +1,21 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+interface IQuiz {
+    question: string,
+    options: Array<{ label: string, id: string }>,
+    correct: string,
+    id: string
+}
 
-const initialState = {
+interface IInitialState {
+    currentQuiz: number,
+    countOfCorrectAnswers: number,
+    selectedOption: string,
+    quizToEdit: IQuiz,
+    quizData: Array<IQuiz>
+}
+
+const initialState: IInitialState = {
     currentQuiz: 0,
     countOfCorrectAnswers: 0,
     selectedOption: '',
@@ -11,31 +25,7 @@ const initialState = {
         correct: '',
         id: ''
     },
-    quizData: [
-        {
-            question: 'How old is Denys?',
-            options: [
-                {label: '14', id: 'a'},
-                {label: '16', id: 'b'},
-                {label: '18', id: 'c'},
-                {label: '20', id: 'd'},
-            ],
-            correct: 'c',
-            id: '2'
-        },
-        {
-            question: 'How old is Korp',
-            options: [
-                {label: '19', id: 'a'},
-                {label: '21', id: 'b'},
-                {label: '23', id: 'c'},
-                {label: '25', id: 'd'},
-                {label: '27', id: 'g'},
-            ],
-            correct: 'a',
-            id: '1'
-        },
-    ]
+    quizData: []
 }
 
 const quizSlice = createSlice({
@@ -56,6 +46,8 @@ const quizSlice = createSlice({
                 id: ''
             }
             state.selectedOption = ''
+
+            localStorage.setItem('quizData', JSON.stringify(state.quizData))
         },
 
         setQuizToEdit(state, action) {
@@ -78,9 +70,20 @@ const quizSlice = createSlice({
         addQuiz(state, action) {
             state.quizData.push(action.payload)
             state.selectedOption = ''
+
+            localStorage.setItem('quizData', JSON.stringify(state.quizData))
         },
         deleteQuiz(state, action) {
-            state.quizData.filter(quiz => quiz.id !== action.payload.id)
+            state.quizData = state.quizData.filter(quiz => quiz.id !== action.payload)
+
+            localStorage.setItem('quizData', JSON.stringify(state.quizData))
+
+        },
+        loadQuizData(state) {
+            const quizDataString = localStorage.getItem('quizData')
+            if (quizDataString) {
+                state.quizData = JSON.parse(quizDataString)
+            }
         }
     }
 })
@@ -89,6 +92,7 @@ export const {
     deleteQuiz,
     playAgain,
     setQuizToEdit,
+    loadQuizData,
     increaseCorrectAnswers,
     changeSelectedOption,
     editQuiz,

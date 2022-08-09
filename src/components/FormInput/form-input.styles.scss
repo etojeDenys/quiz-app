@@ -8,11 +8,13 @@ $main-color: black;
 }
 
 .group {
+  width: 100%;
   position: relative;
   box-sizing: border-box;
   .form-input {
-
-
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 100%;
     background-color: white;
     color: $sub-color;
     font-size: 18px;

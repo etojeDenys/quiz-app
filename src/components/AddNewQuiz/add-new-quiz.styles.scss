@@ -1,38 +1,52 @@
 
-
-.add-quiz__container{
+.add-quiz__container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
 }
 
-.add-quiz{
+.add-quiz {
+
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  .add-quiz__wrapper{
-    .add-option__btn{
+
+  form {
+    width: 100%;
+  }
+
+  .wrapper {
+    margin-top: 15px;
+    input{
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    button {
       background-color: dodgerblue;
       border: none;
       color: #fff;
       height: 40px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
     }
   }
-  .wrapper{
+
+  .wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 40px;
-    button{
+
+    button {
       height: 25px;
       font-size: 15px;
     }
   }
 }
 
-.add-quiz__list{
+.add-quiz__list {
   padding: 10px;
   min-width: 200px;
 }

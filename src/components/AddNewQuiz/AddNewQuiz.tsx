@@ -103,7 +103,7 @@ const AddNewQuiz = () => {
                         name='question'
                         handleChange={handleChange}
                         type="text"
-                        label='Question'
+                        label='Question:'
                     />
                     <div className='wrapper'>
                         <FormInput
@@ -111,14 +111,19 @@ const AddNewQuiz = () => {
                             name='option'
                             handleChange={handleChange}
                             type="text"
-                            label='Options'
+                            label='Options:'
                         />
                         <CustomButton type='submit'>Add option</CustomButton>
                     </div>
                 </form>
 
-                <QuizToShow errorMessage={error} quiz={quiz} isEdit={!!quizToEdit.id} deleteOption={deleteOption}
-                            handleClick={createQuiz}/>
+                <QuizToShow
+                    errorMessage={error}
+                    quiz={quiz}
+                    isEdit={!!quizToEdit.id}
+                    deleteOption={deleteOption}
+                    handleClick={createQuiz}
+                />
             </div>
         </div>
     )

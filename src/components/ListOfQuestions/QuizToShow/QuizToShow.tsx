@@ -3,6 +3,9 @@ import QuizList from "../../Quiz/QuizList/QuizList";
 import CustomButton from "../../Quiz/CustomButton/CustomButton";
 import {IQuiz} from "../ListOfQuestions";
 import './quiz-to-show.styles.scss'
+import {ReactComponent as DeleteIcon} from "./delete.svg";
+import {deleteQuiz} from "../../../store/quizSlice";
+import {useAppDispatch} from "../../../hook";
 
 interface QuizToShowProps {
     quiz: { question: string, options: Array<{ label: string, id: string }>, correct: string, id: string },
@@ -14,16 +17,20 @@ interface QuizToShowProps {
     errorMessage?: string
 }
 
-const QuizToShow: React.FC<QuizToShowProps> = ({
-                                                   quiz,
-                                                   errorMessage,
-                                                   index,
-                                                   isEdit,
-                                                   deleteOption,
-                                                   handleClick,
-                                                   disabled
-                                               }) => {
+const QuizToShow: React.FC<QuizToShowProps> = (props) => {
+    const dispatch = useAppDispatch()
 
+    const {
+        quiz,
+        errorMessage,
+        index,
+        isEdit,
+        deleteOption,
+        handleClick,
+        disabled
+    } = props
+
+    console.log(isEdit)
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         handleClick(quiz)
@@ -45,6 +52,7 @@ const QuizToShow: React.FC<QuizToShowProps> = ({
                         correctAnswer={quiz.correct}
                         deleteOption={deleteOption}
                     />
+                    {!deleteOption && <DeleteIcon onClick={() => dispatch(deleteQuiz(quiz.id))} className='delete-icon'/>}
                 </div>
                 <CustomButton type='submit'>{isEdit || disabled ? 'Edit' : 'Create'}</CustomButton>
             </form>
